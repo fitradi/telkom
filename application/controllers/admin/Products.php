@@ -19,12 +19,7 @@ class Products extends CI_Controller
         // $nana["hasil"]=$this->product_model->Datel();
         $this->load->view("admin/product/list", $data);
         // $this->load->view("admin/product/new_form", $nana);
-        $query_datel = $this->product_model->Datel();      
-
-        $tes= array (
-            'datel' => $query_datel,
-        );
-        $this->load->view("admin/product/edit_form", $tes);
+        
         
     }
 
@@ -76,15 +71,7 @@ class Products extends CI_Controller
         $this->load->view("admin/product/edit_form", $data, $anu);
     }
 
-    public function tes(){
-        $query_datel = $this->db->query("select * from datel")->result();
-       
-
-        $anu= array (
-            'anu' => $query_datel,
-        );
-        $this->load->view("admin/product/edit_form", $anu);
-    }
+    
 
     public function delete($id=null)
     {

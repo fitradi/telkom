@@ -33,7 +33,7 @@
 					</div>
 					<div class="card-body">
 
-						<form action="<?php base_url(" admin/product/edit") ?>"  method="post"
+						<form action="<?php base_url(" admin/product/edit") ?>" method="post"
 							enctype="multipart/form-data" >
 
 							<input type="hidden" name="id" value="<?php echo $product->product_id?>" />
@@ -57,14 +57,17 @@
 								</div>
 							</div>
 
-							<div class="form-group" <?php base_url(" admin/product/tes") ?>>
+							<div class="form-group">
 								<label for="name">Datel*</label>
-								<select class="form-control" id="datel	" name="datel">
-								<option value="">- Pilih </option>
-								<?php foreach($datel->result() as $key => $data) { ?>
-									<option value ="<?=$data->id_datel?>"><?=$data->datel?> </option>
-								<?php } ?> </select>
-								
+								<select class="form-control" id="datel" name="datel">
+                                    <option selected="0"><?php echo $product->datel ?></option>                                   
+                                        <option value="1">Magelang</option>
+                                        <option value="2">Muntilan</option>
+										<option value="3">Purworejo</option>
+                                        <option value="4">Kebumen</option>
+										<option value="5">Temanggung</option>
+										<option value="6">Wonosobo</option>                 
+                                </select>
 								<div class="invalid-feedback">
 									<?php echo form_error('datel') ?>
 								</div>
@@ -73,7 +76,7 @@
 							<div class="form-group">
 								<label for="sel1">STO*</label>
 								<select class="form-control" id="sto" name="sto">
-								<option value="">- Pilih </option> 
+								<option selected="0"><?php echo $product->sto ?> </option>
 								</select>
 							
 								<div class="invalid-feedback">
@@ -138,7 +141,7 @@
                                     <option selected="0"><?php echo $product->status ?></option>
                                    
                                         <option value="1">Submitted</option>
-                                        <option value="2">Designed</option>
+                                        <option value="2">Fisik DONE</option>
 										<option value="3">On Progress</option>
                                         <option value="4">Checking</option>
 										<option value="5">Drawing</option>
@@ -183,5 +186,35 @@
 		<?php $this->load->view("admin/_partials/js.php") ?>
 
 </body>
+<script type="text/javascript">
+		$(document).ready(function(){
+			// Country dependent ajax
+			$("#datel").on("change",function(){
+				var id_datel = $(this).val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/products/sto_test');?>",
+                    method : "POST",
+                    data : {id_datel: id_datel},
+                    async : true,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+                        for(i=0; i<data.length; i++){
+                            html += '<option value='+data[i].sto+'>'+data[i].sto+'</option>';
+                        }
+                        $('#sto').html(html);
+ 
+                    }
+                });
+                return false;
+				
+			});
+		});
+
+			// state dependent ajax
+		
+	</script>
 
 </html>

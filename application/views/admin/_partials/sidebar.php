@@ -13,9 +13,9 @@
             <span>Data</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="<?php echo site_url('admin/products/add') ?>">Tambah Data</a>
-            <a class="dropdown-item" href="<?php echo site_url('admin/products') ?>">List Data</a>
-            <a class="dropdown-item" href="<?php echo site_url('admin/data') ?>">Data Lanjutan</a>
+            <a class="dropdown-item" href="<?php echo site_url('admin/sales') ?>">Data Sales</a>
+            <a class="dropdown-item" href="<?php echo site_url('admin/products') ?>">Data SDI</a>
+            <a class="dropdown-item" href="<?php echo site_url('admin/data') ?>">Data Mitra / Lapangan</a>
         </div>
     </li>
     <li class="nav-item">

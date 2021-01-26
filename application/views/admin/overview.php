@@ -91,15 +91,53 @@
 		</div>
 
 		<!-- Area Chart Example-->
-		<div class="card mb-3">
-			<div class="card-header">
-			<i class="fas fa-chart-area"></i>
-			Visitor Stats</div>
-			<div class="card-body">
-			<canvas id="myAreaChart" width="100%" height="30"></canvas>
-			</div>
-			<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-		</div>
+		<div class="table-responsive">
+							<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                    <th>Datel</th>
+                    <th>MYIR</th>
+                    <th>Sales</th>
+                    <th>SPV</th>
+                    <th>Customer Name</th>
+                    <th>Project</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ($sales as $data): ?>
+									<tr>
+										<td width="150">
+											<?php echo $data->datel ?>
+										</td>
+										<td>
+											<?php echo $data->myir ?>
+										</td>
+										<td>
+											<?php echo $data->sales ?>
+										</td>
+										<td>
+											<?php echo $data->spv ?>
+										</td>
+                    <td>
+											<?php echo $data->cust_name ?>
+										</td>
+                    <td>
+											<?php echo $data->project ?>
+										</td>
+                    <td>
+											<?php echo $data->latitude ?>
+										</td>
+                    <td>
+											<?php echo $data->longitude ?>
+										</td>
+                    </tr>
+									<?php endforeach; ?>
+
+								</tbody>
+							</table>
+						</div>
 
 		</div>
 		<!-- /.container-fluid -->

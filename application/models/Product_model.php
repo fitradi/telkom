@@ -128,13 +128,13 @@ class Product_model extends CI_Model
       return 0;
     }   
 }
-        // public function Datel()
-        // {
-        //     $this->db->order_by('id_datel', 'ASC');
-        //     return $this->db->from('datel')
-        //     ->get()
-        //     ->result();
-        // }
+        public function Datel()
+        {
+            $this->db->order_by('id_datel', 'ASC');
+            return $this->db->from('datel')
+            ->get()
+            ->result();
+        }
 
         // public function Sto($id_datel)
         // {
