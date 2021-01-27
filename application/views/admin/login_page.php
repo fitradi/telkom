@@ -22,10 +22,10 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-5 mx-auto mt-5">
-                <form action="<?= site_url('admin/login') ?>" method="POST">
+                <form action="<?= site_url('admin/login/login_act') ?>" method="POST">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Pakai username juga bisa.." required />
+                        <input type="text" class="form-control" name="username" placeholder="Pakai username juga bisa.." required />
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
