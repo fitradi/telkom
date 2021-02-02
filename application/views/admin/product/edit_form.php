@@ -76,7 +76,7 @@
 							<div class="form-group">
 								<label for="sel1">STO*</label>
 								<select class="form-control" id="sto" name="sto">
-								<option selected="0"><?php echo $product->sto ?> </option>
+								<option selected="0"><?php echo $product->sto_name ?> </option>
 								</select>
 							
 								<div class="invalid-feedback">
@@ -202,7 +202,7 @@
                         var html = '';
                         var i;
                         for(i=0; i<data.length; i++){
-                            html += '<option value='+data[i].sto+'>'+data[i].sto+'</option>';
+                            html += '<option value='+data[i].id_sto+'>'+data[i].sto+'</option>';
                         }
                         $('#sto').html(html);
  

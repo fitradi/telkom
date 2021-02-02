@@ -5,6 +5,7 @@ class Data_model extends CI_Model
     private $_table = "data";
     public $data_id;
     public $nama_lop;
+    public $sto;
     public $koordinat;
     public $segment;
     public $distribusi;
@@ -47,7 +48,10 @@ class Data_model extends CI_Model
 
     public function getAll()
     {
-        return $this->db->get($this->_table)->result();
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea,c.no_rak_oa as no_rak_oa, c.panel_ea as panel_ea,c.panel_oa as panel_oa, c.port_ea as port_ea,c.port_oa as port_oa, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name,b.name as nama from data c join sto p on p.id_sto=c.sto join products b on b.product_id=c.nama_lop")->result();
+       
+        return $product_join;
+        // return $this->db->get($this->_table)->result();
     }
 
     public function getdata($where='')
@@ -57,14 +61,27 @@ class Data_model extends CI_Model
     
     public function getById($id)
     {
-        return $this->db->get_where($this->_table, ["data_id" => $id])->row();
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea, c.panel_ea as panel_ea, c.port_ea as port_ea, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name from data c join sto p on p.id_sto=c.sto where c.data_id='$id'")->row();
+       
+        return $product_join;
+        // return $this->db->get_where($this->_table, ["data_id" => $id])->row();
     }
+    public function getdata1()
+    {
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea, c.panel_ea as panel_ea, c.port_ea as port_ea, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name from data c join sto p on p.id_sto=c.sto")->row();
+       
+        return $product_join;
+        // return $this->db->get_where($this->_table, ["data_id" => $id])->row();
+    }
+
 
     public function save()
     {
-        $post = $this->input->post();    
+        $post = $this->input->post(); 
+       
         $this->data_id = uniqid();
-		$this->nama_lop = $post["nama_lop"];
+        $this->nama_lop = $post["nama_lop"];
+        $this->sto = $post["sto"];
         $this->koordinat = $post["koordinat"];
         $this->segment = $post["segment"];
         $this->distribusi = $post["distribusi"];
@@ -91,8 +108,23 @@ class Data_model extends CI_Model
         $this->qr_code = $post["qr_code"];
         $this->tipe_odp = $post["tipe_odp"];
 
+       
+
 
         $this->db->insert($this->_table, $this);
+        
+        
+        
+
+        
+    }
+    public function update_return(){
+        $post = $this->input->post(); 
+        $nama_lop =   $post["nama_lop"];
+        $push = $this->db->query("select sto from products where name='$nama_lop'")->row();
+        $this->db->where('nama_lop',$nama_lop);
+        $data = array('sto'=>$push);
+        $this->db->update('data',$data);
     }
 
     public function update()
@@ -135,11 +167,11 @@ class Data_model extends CI_Model
     
 	
 	
-        public function view(){
-            $this->db->from("datel");
-            $query = $this->db->get(); // Tampilkan semua data yang ada di tabel provinsi
-            return $query;
-        }
+    public function view(){
+        $this->db->from("products");
+        $query = $this->db->get(); // Tampilkan semua data yang ada di tabel provinsi
+        return $query;
+    }
 
     
 

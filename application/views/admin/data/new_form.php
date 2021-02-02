@@ -34,11 +34,25 @@
 						<form action="<?php base_url('admin/data/add') ?>" method="post" enctype="multipart/form-data" >
 							<div class="form-group">
 								<label for="nama_lop">Nama LOP*</label>
-								<input class="form-control <?php echo form_error('nama_lop') ? 'is-invalid':'' ?>"
-								 type="text" name="nama_lop" placeholder="Nama LOP" />
+								<select class="form-control" id="nama_lop" name="nama_lop">
+								<option value="">- Pilih </option>
+								<?php foreach($lop->result() as $key => $data) { ?>
+									<option value ="<?=$data->product_id?>"><?=$data->name?> </option>
+								<?php } ?> </select>
 								<div class="invalid-feedback">
 									<?php echo form_error('nama_lop') ?>
 								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="sto">STO*</label>
+								<select class="form-control" id="sto" name="sto">
+								<option placeholder="Pilih" value="">Pilih	</option>													
+								</select>							
+								<div class="invalid-feedback">
+									<?php echo form_error('sto') ?>
+								</div>
+								
 							</div>
 
 							<div class="form-group">
@@ -151,8 +165,9 @@
 							</div>
 							<div class="form-group">
 								<label for="nama_olt">Nama OLT</label>
-								<input class="form-control <?php echo form_error('nama_olt') ? 'is-invalid':'' ?>"
-								 type="text" name="nama_olt" placeholder="Masukkan nama OLT" />
+								<select class="form-control" id="nama_olt" name="nama_olt">
+								<option value="">	</option>													
+								</select>					
 								<div class="invalid-feedback">
 									<?php echo form_error('nama_olt') ?>
 								</div>
@@ -344,7 +359,70 @@
 
 
 </body>
+<script type="text/javascript">
+		$(document).ready(function(){
+			// Country dependent ajax
+			$("#nama_lop").on("change",function(){
+				var product_id = $(this).val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/data/sto_tester');?>",
+                    method : "POST",
+                    data : {product_id: product_id},
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+						for(i=0; i<data.length; i++){
+                            html += '<option value='+data[i].sto+'>'+data[i].nama_sto+'</option>'
+							;
+                        }
+                        $('#sto').html(html);
+ 
+ 
+                    }
+                });
+				
+			});
+
+			$("#nama_lop").on('change',function(){
+				var sto = $('#sto').val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/data/sto_tester1');?>",
+                    method : "POST",
+                    data : {sto: sto},
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+						for(i=0; i<data.length; i++){
+                            html += '<option value='+data[i].olt+'>'+data[i].olt+'</option>';
+                        }
+                        $('#nama_olt').html(html);
+ 
+ 
+                    }
+                });
+                return false;
+				
+			});
+			
+		});
+		$(document).ready(function(){
+			// Country dependent ajax
+			
+
   
+			
+		});
+
+			// state dependent ajax
+		
+	</script>
+	
  
 
 </html> 

@@ -40,7 +40,7 @@
 									<?php foreach ($products as $product): ?>
 									<tr>
 										<td width="150">
-											<?php echo $product->nama_lop ?>
+											<?php echo $product->nama ?>
 										</td>
 										<td>
 											<?php echo ($product->nama_olt) ?>
@@ -50,13 +50,14 @@
 										</td>
 										<td>
 											<?php echo $product->distribusi ?>
+											
 										</td>
 										
 										
 										
 										<td width="250" >
 											<a id="detail" href=" "  class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-detail"
-													data-var1="<?=$product->nama_lop?>"
+													data-var1="<?=$product->nama?>"
 													data-var2="<?=$product->koordinat?>"
 													data-var3="<?=$product->segment?>"
 													data-var4="<?=$product->distribusi?>"

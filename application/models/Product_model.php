@@ -45,13 +45,17 @@ class Product_model extends CI_Model
     
     public function getById($id)
     {
-        return $this->db->get_where($this->_table, ["product_id" => $id])->row();
+
+        $product_join= $this->db->query("select c.product_id as product_id, c.name as name, c.pt2 as pt2, c.image as image , c.datel as datel, c.sto as sto, c.status as status,c.odc as odc, c.jml_odp as jml_odp,p.sto as sto_name from products c join sto p on p.id_sto=c.sto where c.product_id='$id'")->row();
+       
+       return $product_join;
+        // return $this->db->get_where($this->_table, ["product_id" => $id])->row();
     }
 
     public function save()
     {
         $post = $this->input->post();
-        $this->product_id = uniqid();        
+             
         $this->image = $this->_uploadImage();
         $this->name = substr($this->_uploadImage(), 0, -4); //$post["name"];
 		$this->pt2 = $post["pt2"];
