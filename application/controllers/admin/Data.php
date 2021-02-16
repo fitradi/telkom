@@ -48,6 +48,7 @@ class Data extends CI_Controller
     public function edit($id = null)
     {
         if (!isset($id)) redirect('admin/data');
+        $data["products"] = $this->data_model->getAll();
        
         $product = $this->data_model;
         $validation = $this->form_validation;
@@ -57,8 +58,13 @@ class Data extends CI_Controller
             $product->update();
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
-
-        $data["product"] = $product->getById($id);
+        $data1= $product->getdata1();
+         
+        $data= array (
+            "product" => $product->getPake($id),
+            "lop" => $this->data_model->view(),
+            "data" => $data1,
+        );
         if (!$data["product"]) show_404();
         
         $this->load->view("admin/data/edit_form", $data);

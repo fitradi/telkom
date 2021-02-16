@@ -26,6 +26,7 @@ class Data_model extends CI_Model
     public $kelurahan;
     public $qr_code;
     public $tipe_odp;
+    public $rar = 'null';
     
 
     public function rules()
@@ -48,7 +49,7 @@ class Data_model extends CI_Model
 
     public function getAll()
     {
-        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea,c.no_rak_oa as no_rak_oa, c.panel_ea as panel_ea,c.panel_oa as panel_oa, c.port_ea as port_ea,c.port_oa as port_oa, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name,b.name as nama from data c join sto p on p.id_sto=c.sto join products b on b.product_id=c.nama_lop")->result();
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea,c.no_rak_oa as no_rak_oa, c.panel_ea as panel_ea,c.panel_oa as panel_oa, c.port_ea as port_ea,c.port_oa as port_oa, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, c.rar as rar, p.sto as sto_name,b.name as nama from data c join sto p on p.id_sto=c.sto join products b on b.product_id=c.nama_lop")->result();
        
         return $product_join;
         // return $this->db->get($this->_table)->result();
@@ -61,14 +62,23 @@ class Data_model extends CI_Model
     
     public function getById($id)
     {
-        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea, c.panel_ea as panel_ea, c.port_ea as port_ea, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name from data c join sto p on p.id_sto=c.sto where c.data_id='$id'")->row();
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea,c.no_rak_oa as no_rak_oa, c.panel_ea as panel_ea, c.port_ea as port_ea,c.port_oa as port_oa, c.panel_oa as panel_oa, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.rar as rar, c.tipe_odp as tipe_odp, p.sto as sto_name from data c join sto p on p.id_sto=c.sto where c.data_id='$id'")->row();
        
         return $product_join;
         // return $this->db->get_where($this->_table, ["data_id" => $id])->row();
     }
+    public function getPake($id)
+    {
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea,c.no_rak_oa as no_rak_oa, c.panel_ea as panel_ea, c.port_ea as port_ea,c.port_oa as port_oa, c.panel_oa as panel_oa, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.rar as rar, c.tipe_odp as tipe_odp, p.name as name from data c join products p on p.product_id=c.nama_lop where c.data_id='$id'")->row();
+       
+        return $product_join;
+        // return $this->db->get_where($this->_table, ["data_id" => $id])->row();
+    }
+
+
     public function getdata1()
     {
-        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea, c.panel_ea as panel_ea, c.port_ea as port_ea, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, p.sto as sto_name from data c join sto p on p.id_sto=c.sto")->row();
+        $product_join= $this->db->query("select c.data_id as data_id, c.nama_lop as nama_lop, c.koordinat as koordinat, c.segment as segment , c.distribusi as distribusi, c.core_distribusi as core_distribusi, c.slot_olt as slot_olt, c.port_olt as port_olt, c.sto as sto, c.nama_olt as nama_olt, c.no_rak_ea as no_rak_ea, c.panel_ea as panel_ea, c.port_ea as port_ea, c.panel_feeder as panel_feeder, c.port_feeder as port_feeder, c.urutan_pasif_odc as urutan_pasif_odc, c.port_pasif_odc as port_pasif_odc, c.panel_dist_odc as panel_dist_odc, c.port_dist_odc as port_dist_odc, c.jalan as jalan, c.ancer as ancer, c.kecamatan as kecamatan, c.kelurahan as kelurahan, c.qr_code as qr_code, c.tipe_odp as tipe_odp, c.rar as rar, p.sto as sto_name from data c join sto p on p.id_sto=c.sto")->row();
        
         return $product_join;
         // return $this->db->get_where($this->_table, ["data_id" => $id])->row();
@@ -107,11 +117,15 @@ class Data_model extends CI_Model
         $this->kelurahan = $post["kelurahan"];
         $this->qr_code = $post["qr_code"];
         $this->tipe_odp = $post["tipe_odp"];
+        $this->rar = $this->_uploadRar();
 
        
 
-
+        
+        $this->db->query(" UPDATE `products` SET `status` = 'Fisik DONE' WHERE `products`.`product_id` = '$this->nama_lop';");
+    
         $this->db->insert($this->_table, $this);
+        
         
         
         
@@ -157,14 +171,49 @@ class Data_model extends CI_Model
         $this->kelurahan = $post["kelurahan"];
         $this->qr_code = $post["qr_code"];
         $this->tipe_odp = $post["tipe_odp"];
-        $this->db->update($this->_table, $this);
-    }
+        $this->sto = $post["sto"];
+
+        if (!empty($_FILES["rar"]/*["nama_lop"]*/)) {
+            $this->rar = $this->_uploadRar();
+        } else {
+            $this->rar = $post["old_rar"];
+		} 
+    $this->db->update($this->_table, $this , array('data_id' => $post['id']) );
+    
+}
+    
 
     public function delete($id)
     {
+        $this->_deleteRar($id);
         return $this->db->delete($this->_table, array("data_id" => $id));
     }
     
+    private function _uploadRar()
+	{
+		$config['upload_path']          = './upload/data/';
+		$config['allowed_types']        = 'rar|zip';
+		// $config['file_name']            = $this->nama_lop;
+		$config['overwrite']			= true;
+		$config['max_size']             = 10240; // 1MB
+
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload('rar')) {
+			return $this->upload->data("file_name");
+		}
+		else{
+		return null ;}
+	}
+
+	private function _deleteRar($id)
+	{
+		$product = $this->getById($id);
+		if ($product->rar != "default.jpg") {
+			$filename = explode(".", $product->rar)[0];
+			return array_map('unlink', glob(FCPATH."upload/data/$filename.*"));
+		}
+    }
 	
 	
     public function view(){

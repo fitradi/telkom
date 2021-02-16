@@ -7,7 +7,8 @@ class Sales extends CI_Controller {
     if($this->session->userdata('status') !='login'){
       redirect('admin/login');
     };    
-    $this->load->model('Sales_model');
+    $this->load->model('Sales_model');    
+    $this->load->library('form_validation');
   }
   
   public function index(){
@@ -69,13 +70,91 @@ class Sales extends CI_Controller {
           'latitude'=>$row['G'],
           'longitude'=>$row['H'],
         ));
+        $myir[]=$row['B'];
+        $datel=$row['A'];
+        $sales=$row['C'];
+        $cust_name=$row['E'];
+        
       }
       
+     
       $numrow++; // Tambah 1 setiap kali looping
     }
+    $lul =implode(", ", $myir);
     // Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model
-    $this->Sales_model->insert_multiple($data);
+  //   print_r($myir);
+  //   foreach($myir )
+    $cek = $this->db->query("select concat(myir) as myir from sales where myir in ('$lul')");
+  //   // foreach($cek as $ceks){
+  //   //   $post_myir=$ceks->myir;
+  //   // }    
+    if($cek->num_rows()>0)
+  {
+    // $this->db->where_in('mysir',$lul);
+    // $this->db->delete('sales'); 
+    $this->db->query("DELETE from sales where myir in ($lul)");
+    // $this->db->update_batch('sales', $data,'myir');
+    $this->db->insert_batch('sales', $data);
+
+  }else{
+    $this->db->insert_batch('sales', $data);
+  }
     
     redirect("admin/sales"); // Redirect ke halaman awal (ke controller siswa fungsi index)
+  }
+  public function edit($id = null){
+    if (!isset($id)) redirect('admin/sales');
+       
+    $sales = $this->Sales_model;
+    $validation = $this->form_validation;
+    $validation->set_rules($sales->rules());
+
+    if ($validation->run()) {
+        $sales->update();
+        $this->session->set_flashdata('success', 'Berhasil disimpan');
+    }
+
+    // $data["sales"] = $sales->getById($id);
+    // if (!$data["sales"]) show_404();
+    $query_datel = $this->Sales_model->datel();
+       
+
+    $data= array (
+        "sales" =>$sales->getById($id),
+        'datel' => $query_datel,
+    );
+    if (!$data["sales"]) show_404();
+
+    
+    
+    $this->load->view("admin/sales/edit", $data);
+  }
+  public function delete($id = null){
+    if (!isset($id)) show_404();
+        
+    if ($this->Sales_model->delete($id)) {
+      redirect(site_url('admin/sales'));
+      // echo "busak";
+  }
+  } 
+
+  public function add(){
+    $sales = $this->Sales_model;
+    $validation = $this->form_validation;
+    $validation->set_rules($sales->rules());
+
+    if ($validation->run()) {
+        $sales->save();
+        $this->session->set_flashdata('success', 'Berhasil disimpan');
+    }
+    $query_datel = $this->Sales_model->datel();
+       
+
+        $data= array (
+            'datel' => $query_datel,
+        );
+    
+    $this->load->view("admin/sales/add",$data);
+
   }
 }

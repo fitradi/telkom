@@ -58,13 +58,14 @@ class Product_model extends CI_Model
              
         $this->image = $this->_uploadImage();
         $this->name = substr($this->_uploadImage(), 0, -4); //$post["name"];
-		$this->pt2 = $post["pt2"];
+        $this->pt2 = $post["pt2"];
         $this->datel = $post["datel"];
         $this->sto = $post["sto"];
         $this->status = $post["status"];
         $this->odc = $post["odc"];
         $this->jml_odp = $post["jml_odp"];
         $this->db->insert($this->_table, $this);
+        $this->db->query(" UPDATE `sales` SET `status` = '$this->status' WHERE `sales`.`lop` = '$this->name';");
     }
 
     public function update()
@@ -87,6 +88,7 @@ class Product_model extends CI_Model
         $this->odc = $post["odc"];
         $this->jml_odp = $post["jml_odp"];
         $this->db->update($this->_table, $this, array('product_id' => $post['id']));
+        $this->db->query(" UPDATE `sales` SET `status` = '$this->status' WHERE `sales`.`lop` = '$this->name';");
     }
 
     public function delete($id)

@@ -51,8 +51,7 @@
 										<td>
 											<?php echo $product->distribusi ?>
 											
-										</td>
-										
+										</td>																	
 										
 										
 										<td width="250" >
@@ -90,6 +89,12 @@
 											 class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
 											<a onclick="deleteConfirm('<?php echo site_url('admin/data/delete/'.$product->data_id) ?>')"
 											 href="#!" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Delete </a>
+											<?php if ($product->rar != null) { ?>
+											<html>
+											<a href="<?php echo base_url('upload/data/'.$product->rar) ?>"
+											 class="btn btn-small" ><i class="fas fa-download"></i> Download</a>
+											 <?php }?>
+											
 										</td>
 									</tr>
 									<?php endforeach; ?>

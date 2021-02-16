@@ -18,6 +18,8 @@
         <div class="card mb-3">
 					<div class="card-header">
 						<a href="<?php echo site_url('admin/Sales/form') ?>"><i class="fas fa-plus"></i> Import Data</a>
+						<a>&nbsp&nbsp&nbsp&nbsp</a>
+						<a href="<?php echo site_url('admin/Sales/add') ?>"><i class="fas fa-plus"></i>Tambah Data Satuan</a>
 					</div>
 					<div class="card-body">
 
@@ -33,6 +35,7 @@
                     <th>Project</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
+					<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,17 +53,22 @@
 										<td>
 											<?php echo $data->spv ?>
 										</td>
-                    <td>
+                    					<td>
 											<?php echo $data->cust_name ?>
 										</td>
-                    <td>
+                    					<td>
 											<?php echo $data->project ?>
 										</td>
-                    <td>
+                    					<td>
 											<?php echo $data->latitude ?>
 										</td>
-                    <td>
+                    					<td>
 											<?php echo $data->longitude ?>
+										</td>
+										<td>
+					
+					<a class="fas fa-pencil-square-o" href="<?= base_url('admin/sales/edit/'.$data->id) ?>"></a> |
+					<a class="fas fa-trash" href="#!" onclick="deleteConfirm('<?php echo site_url('admin/sales/delete/'.$data->id) ?>')"></a> 
 										</td>
                     </tr>
 									<?php endforeach; ?>
@@ -90,4 +98,10 @@
   
 
 </body>
+<script>
+	function deleteConfirm(url){
+		$('#btn-delete').attr('href', url);
+		$('#deleteModal').modal();
+	}
+	</script>
 </html>

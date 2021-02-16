@@ -33,6 +33,15 @@
 
 						<form action="<?php base_url('admin/data/add') ?>" method="post" enctype="multipart/form-data" >
 							<div class="form-group">
+								<label for="name">Upload revisi desain & RAB *jika ada</label>
+								<input class="form-control-file <?php echo form_error('rar') ? 'is-invalid':'' ?>"
+								 type="file" name="rar"/>
+								<div class="invalid-feedback">
+									<?php echo form_error('rar') ?>
+								</div>
+							</div>
+
+							<div class="form-group">
 								<label for="nama_lop">Nama LOP*</label>
 								<select class="form-control" id="nama_lop" name="nama_lop">
 								<option value="">- Pilih </option>

@@ -28,24 +28,49 @@
 				<div class="card mb-3">
 					<div class="card-header">
 
-						<a href="<?php echo site_url('admin/products/') ?>"><i class="fas fa-arrow-left"></i>
+						<a href="<?php echo site_url('admin/data/') ?>"><i class="fas fa-arrow-left"></i>
 							Back</a>
 					</div>
 					<div class="card-body">
 
-						<form action="<?php base_url(" admin/product/edit") ?>" method="post"
+						<form action="<?php base_url(" admin/data/edit") ?>" method="post"
 							enctype="multipart/form-data" >
 
 							<input type="hidden" name="id" value="<?php echo $product->data_id?>" />
-
+							<div class="form-group">
+								<label for="name">Upload revisi desain & RAB *jika ada</label>
+								<input class="form-control-file <?php echo form_error('rar') ? 'is-invalid':'' ?>"
+								 type="file" name="rar"/>
+								<input type="hidden" name="old_rar" value="<?php echo $product->rar ?>" />									
+								<div class="invalid-feedback">
+									<?php echo form_error('rar') ?>
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<label for="nama_lop">Nama LOP*</label>
-								<input class="form-control <?php echo form_error('nama_lop') ? 'is-invalid':'' ?>"
-								 type="text" name="nama_lop" placeholder="Nama LOP" value="<?php echo $product->nama_lop ?>"/>
+								<select class="form-control" id="nama_lop" name="nama_lop">
+								<option value="<?php echo $product->nama_lop ?>"> <?php echo $product->name ?> </option>
+								<?php foreach($lop->result() as $key => $data) { ?>
+									<option value ="<?=$data->product_id?>"><?=$data->name?> </option>
+								<?php } ?> </select>
 								<div class="invalid-feedback">
 									<?php echo form_error('nama_lop') ?>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label for="sto">STO*</label>
+								<select class="form-control" id="sto" name="sto">
+								<option selected="<?php echo $product->sto ?>"> <?php echo $product->sto ?>	</option>													
+								</select>							
+								<div class="invalid-feedback">
+									<?php echo form_error('sto') ?>
+								</div>
+								
+							</div>
+
+							
 							<div class="form-group">
 								<label for="koordinat">Koordinat</label>
 								<input class="form-control <?php echo form_error('koordinat') ? 'is-invalid':'' ?>"
@@ -154,10 +179,12 @@
 									<?php echo form_error('port_olt') ?>
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<label for="nama_olt">Nama OLT</label>
-								<input class="form-control <?php echo form_error('nama_olt') ? 'is-invalid':'' ?>"
-								 type="text" name="nama_olt" placeholder="Masukkan nama OLT" value="<?php echo $product->nama_olt ?>" />
+								<select class="form-control" id="nama_olt" name="nama_olt">
+								<option value="<?php echo $product->nama_olt ?>"> <?php echo $product->nama_olt ?>	</option>													
+								</select>					
 								<div class="invalid-feedback">
 									<?php echo form_error('nama_olt') ?>
 								</div>
@@ -346,5 +373,69 @@
 		<?php $this->load->view("admin/_partials/js.php") ?>
 
 </body>
+<script type="text/javascript">
+		$(document).ready(function(){
+			// Country dependent ajax
+			$("#nama_lop").on("change",function(){
+				var product_id = $(this).val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/data/sto_tester');?>",
+                    method : "POST",
+                    data : {product_id: product_id},
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+						for(i=0; i<data.length; i++){
+                            html += '<option value='+data[i].sto+'>'+data[i].nama_sto+'</option>'
+							;
+                        }
+                        $('#sto').html(html);
+ 
+ 
+                    }
+                });
+				
+			});
+
+			$("#nama_lop").on('change',function(){
+				var sto = $('#sto').val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/data/sto_tester1');?>",
+                    method : "POST",
+                    data : {sto: sto},
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+						for(i=0; i<data.length; i++){
+                            html += '<option value='+data[i].olt+'>'+data[i].olt+'</option>';
+                        }
+                        $('#nama_olt').html(html);
+ 
+ 
+                    }
+                });
+                return false;
+				
+			});
+			
+		});
+		$(document).ready(function(){
+			// Country dependent ajax
+			
+
+  
+			
+		});
+
+			// state dependent ajax
+		
+	</script>
+	
 
 </html>

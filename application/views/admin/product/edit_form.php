@@ -76,7 +76,7 @@
 							<div class="form-group">
 								<label for="sel1">STO*</label>
 								<select class="form-control" id="sto" name="sto">
-								<option selected="0"><?php echo $product->sto_name ?> </option>
+								<option selected="<?php echo $product->sto ?>"><?php echo $product->sto ?> </option>
 								</select>
 							
 								<div class="invalid-feedback">
