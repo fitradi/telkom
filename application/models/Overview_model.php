@@ -3,7 +3,7 @@
 class Overview_model extends CI_Model
 {
   public function view(){
-    return $this->db->get('sales')->result(); // Tampilkan semua data yang ada di tabel siswa
+    return $this->db->get('sales')->result(); 
   }
 
   public function dashboard(){

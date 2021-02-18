@@ -157,4 +157,6 @@ class Sales extends CI_Controller {
     $this->load->view("admin/sales/add",$data);
 
   }
+
+  
 }

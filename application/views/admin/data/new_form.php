@@ -48,10 +48,21 @@
 								<?php foreach($lop->result() as $key => $data) { ?>
 									<option value ="<?=$data->product_id?>"><?=$data->name?> </option>
 								<?php } ?> </select>
+								<input type="hidden" id="lop" name="lop" value= "" >
+								
+								</input>
 								<div class="invalid-feedback">
 									<?php echo form_error('nama_lop') ?>
 								</div>
 							</div>
+							<!-- <div class="form-group">
+								<label for="lop">LOP</label>
+								<select class="form-control" id="lop" name="lop">
+								<option placeholder="Pilih" value="">Pilih	</option>	
+
+								</select>							
+																
+							</div> -->
 
 							<div class="form-group">
 								<label for="sto">STO*</label>
@@ -388,6 +399,30 @@
 							;
                         }
                         $('#sto').html(html);
+ 
+ 
+                    }
+                });
+				
+			});
+			$("#nama_lop").on("change",function(){
+				var product_id = $(this).val();
+				$.ajax({
+                    url : "<?php echo site_url('admin/data/lop');?>",
+                    method : "POST",
+                    data : {product_id: product_id},
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                         
+                        var html = '';
+                        var i;
+						for(i=0; i<data.length; i++){
+                            html += '<input id ="lop" name ="lop" value='+data[i].name+'></input>'
+							
+							;
+                        }
+                        $('#lop').html(html);
  
  
                     }

@@ -76,6 +76,34 @@ class Sales_model extends CI_Model {
     {
         return $this->db->query("select * from sales where status='Inputted';");
     }
+    public function submitted($where='')
+    {
+        return $this->db->query("select * from sales where status='Submitted';");
+    }
+    public function fisik($where='')
+    {
+        return $this->db->query("select * from sales where status='Fisik DONE';");
+    }
+    public function progress($where='')
+    {
+        return $this->db->query("select * from sales where status='On Progress';");
+    }
+    public function chek($where='')
+    {
+        return $this->db->query("select * from sales where status='Checking';");
+    }
+    public function drawing($where='')
+    {
+        return $this->db->query("select * from sales where status='Drawing';");
+    }
+    public function push($where='')
+    {
+        return $this->db->query("select * from sales where status='Push UIM';");
+    }
+    public function getglv($where='')
+    {
+        return $this->db->query("select * from sales where status='GOLIVE';");
+    }
   public function update()
   {
     $post = $this->input->post();
@@ -107,12 +135,14 @@ class Sales_model extends CI_Model {
         $this->cust_name = $post["cust_name"];
         $this->project = $post["project"];
         $this->latitude = $post["latitude"];
-        $this->longitude = $post["longitude"];
+        $this->longitude = $post["longitude"];        
+        $this->status = ('Inputted');
         $this->db->insert($this->_table, $this);
     }
   public function datel(){
       $this->db->from("datel");
-      $query = $this->db->get(); // Tampilkan semua data yang ada di tabel provinsi
+      $query = $this->db->get(); 
       return $query;
   }
+ 
 }

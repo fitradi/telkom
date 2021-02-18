@@ -5,6 +5,7 @@ class Data_model extends CI_Model
     private $_table = "data";
     public $data_id;
     public $nama_lop;
+    public $lop;
     public $sto;
     public $koordinat;
     public $segment;
@@ -91,6 +92,7 @@ class Data_model extends CI_Model
        
         $this->data_id = uniqid();
         $this->nama_lop = $post["nama_lop"];
+        $this->lop = $post["lop"];
         $this->sto = $post["sto"];
         $this->koordinat = $post["koordinat"];
         $this->segment = $post["segment"];
@@ -120,9 +122,13 @@ class Data_model extends CI_Model
         $this->rar = $this->_uploadRar();
 
        
-
-        
+       
         $this->db->query(" UPDATE `products` SET `status` = 'Fisik DONE' WHERE `products`.`product_id` = '$this->nama_lop';");
+        // $this->db->select('name','product_id');
+        // $this->db->from('products');
+        // $this->db->join('data','products.product_id=data.nama_lop');
+        $this->db->query(" UPDATE `sales` SET `status` = 'Fisik DONE' WHERE `sales`.`lop` = '$this->lop' ;");
+        
     
         $this->db->insert($this->_table, $this);
         

@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Overview extends CI_Controller {
+	private $_table = "products";
+
     public function __construct()
     {
 		parent::__construct();
@@ -16,13 +18,27 @@ class Overview extends CI_Controller {
 
 	public function index()
 	{
-		$jml            = $this->product_model->getdata();
-		$jumlah_barang = $jml->num_rows();
+		$golive         = $this->sales_model->getglv();
 		$inputted       = $this->sales_model->getdata();
+		$submitted		= $this->sales_model->submitted();
+		$fisiks			= $this->sales_model->fisik();
+		$progres		= $this->sales_model->progress();		
+		$chek			= $this->sales_model->chek();
+		$draw			= $this->sales_model->drawing();
+		$push			= $this->sales_model->push();
+
 		$input			= $inputted->num_rows();
         $total = array(
-			'jlh_barang'    =>$jumlah_barang,
+			'glv'   	=>$golive->num_rows(),
 			'input'		=>$input,
+			'submit'	=> $submitted->num_rows(),
+			'fisik'		=> $fisiks->num_rows(),
+			'progress'	=> $progres->num_rows(),
+			'cek'		=> $chek->num_rows(),
+			'drawing'	=> $draw->num_rows(),			
+			'push'		=> $push->num_rows(),
+
+
 			'sales' => $this->overview_model->view(),
 			// 'sales' => $this->overview_model->dashboard(),
 			'product' => $this->overview_model->get_products(),
@@ -32,11 +48,37 @@ class Overview extends CI_Controller {
 		
 		
 	}
-	function create(){
-        $package = $this->input->post('package',TRUE);
+	public function create(){
+        // $package = $this->input->post('package',TRUE);
+		
+		
+		$this->image = $this->_uploadImage();
+        $this->name = substr($this->_uploadImage(), 0, -4);
+		
+		$package =  $this->name = substr($this->_uploadImage(), 0, -4);
+		$this->db->insert($this->_table, $this);
         $product = $this->input->post('product',TRUE);
         $this->overview_model->create_package($package,$product);
-        redirect('admin/overview');
+		$this->db->query(" UPDATE `sales` SET `status` = 'Submitted' WHERE `sales`.`lop` = '$this->name';");
+		
+        redirect('admin/products/');
+	}
+	private function _uploadImage()	{
+		$config['upload_path']          = './upload/product/';
+		$config['allowed_types']        = 'rar|zip';
+		// $config['file_name']            = $this->product_id;
+		$config['overwrite']			= true;
+		$config['max_size']             = 10240; // 1MB
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		$image = 'image';
+
+		if ($this->upload->do_upload('image')) {
+			return $this->upload->data("file_name");
+		}
+		print_r($this->upload->display_errors());
+			// return 'gagal' ;
 	}
 	
 	function get_product_by_package(){

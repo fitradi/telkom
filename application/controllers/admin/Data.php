@@ -103,6 +103,17 @@ class Data extends CI_Controller
          
          echo json_encode($data1);
      }
+     function lop(){
+
+        $lop = $this->input->post('product_id');      
+    
+         
+         // $data = $this->db->query("select * from prosducts where product_id=$datelsu")->result();
+         $data = $this->db->query("select name from products where product_id='$lop';")->result();
+         
+         
+         echo json_encode($data);
+     }
     
     
       

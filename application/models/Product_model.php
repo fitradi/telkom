@@ -65,7 +65,7 @@ class Product_model extends CI_Model
         $this->odc = $post["odc"];
         $this->jml_odp = $post["jml_odp"];
         $this->db->insert($this->_table, $this);
-        $this->db->query(" UPDATE `sales` SET `status` = '$this->status' WHERE `sales`.`lop` = '$this->name';");
+        $this->db->query(" UPDATE `sales` SET `status` = 'Submitted' WHERE `sales`.`lop` = '$this->name';");
     }
 
     public function update()
@@ -97,7 +97,7 @@ class Product_model extends CI_Model
         return $this->db->delete($this->_table, array("product_id" => $id));
 	}
 	
-	private function _uploadImage()
+	public function _uploadImage()
 	{
 		$config['upload_path']          = './upload/product/';
 		$config['allowed_types']        = 'rar|zip';
